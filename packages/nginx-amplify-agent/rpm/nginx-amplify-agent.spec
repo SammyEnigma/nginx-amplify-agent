@@ -151,6 +151,11 @@ fi
 
 
 %changelog
+* Tue Mar 29 2022 Bill Beckelhimer <w.beckelhimer@f5.com> 1.8.0-2
+- 1.8.0-2
+- bug fixes
+- update dependency
+
 * Thu Dec  9 2021 Andrei Belov <defan@nginx.com> 1.8.0-1
 - 1.8.0-1
 - agent version for Python 3

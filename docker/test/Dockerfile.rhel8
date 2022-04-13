@@ -75,7 +75,7 @@ RUN pip3 install \
     mock \
     freezegun \
     gevent==1.2.2 \
-    ujson==2.0 \
+    ujson==4.3.0 \
     netifaces==0.10.6
 
 # set some environment variables

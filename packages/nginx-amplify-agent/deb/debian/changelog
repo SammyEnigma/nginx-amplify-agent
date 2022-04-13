@@ -1,3 +1,10 @@
+nginx-amplify-agent (1.8.0-2) stable; urgency=low
+
+  * Bug fixes
+  * Dependency update
+
+ -- Bill Beckelhimer <w.beckelhimer@f5.com>  Tue, 29 Mar 2022 11:15:00 -0800
+
 nginx-amplify-agent (1.8.0-1) stable; urgency=low
 
   * agent version for Python 3
