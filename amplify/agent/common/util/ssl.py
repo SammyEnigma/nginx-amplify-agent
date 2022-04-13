@@ -170,8 +170,7 @@ def certificate_full(filename):
 
             dns_matches = ssl_dns_regex.findall(line)
             if dns_matches:
-                results['names'] = map(lambda x: x.split(':')[1], dns_matches)
-
+                results['names'] = list(map(lambda x: x.split(':')[1], dns_matches))
     return results or None
 
 

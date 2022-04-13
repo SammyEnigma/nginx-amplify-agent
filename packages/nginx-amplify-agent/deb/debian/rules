@@ -22,7 +22,7 @@ build: build-arch build-indep
 
 install:
 	dh_testdir
-	python3 setup.py install --install-layout=deb --prefix=/usr --root=$(INSTALLDIR) --no-compile
+	python3 setup.py install --prefix=/usr --root=$(INSTALLDIR) --no-compile
 
 binary-indep: build install
 	dh_testdir

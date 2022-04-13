@@ -59,3 +59,60 @@ class SSLAnalysisTestCase(BaseTestCase):
         assert_that(results['state'], equal_to('FakeState'))
         assert_that(results['country'], equal_to('RU'))
         assert_that(results['unit'], equal_to('IT'))
+
+    def test_subject_alternative_name(self):
+        results = ssl.certificate_full(
+            "test/fixtures/nginx/ssl/san_cert/single-san.crt")
+        assert results is not None
+        assert results['signature_algorithm'] == 'sha256WithRSAEncryption'
+        assert results['public_key_algorithm'] == 'rsaEncryption'
+        assert results['length'] == '2048'
+        assert type(results['names']) is list
+        assert len(results['names']) == 1
+        assert results['names'][0] == 'mock.amplify-url.com'
+
+    def test_ssl_analysis(self):
+        results = ssl.ssl_analysis(
+            "test/fixtures/nginx/ssl/san_cert/single-san.crt")
+        assert results is not None
+        assert 'dates' in results
+        assert results['dates'] == {'start': 1645077096, 'end': 1952661096}
+        assert 'subject' in results
+        assert results['subject'] == {
+            'common_name': 'mock.cn.amplify-url.com',
+            'organization': 'MyOrg',
+            'location': 'MyCity',
+            'state': 'MyState',
+            'country': 'ES'}
+        assert results['issuer'] is None
+        assert 'purpose' in results
+        assert results['purpose'] == {
+            'SSL client': 'Yes',
+            'SSL client CA': 'No',
+            'SSL server': 'Yes',
+            'SSL server CA': 'No',
+            'Netscape SSL server': 'Yes',
+            'Netscape SSL server CA': 'No',
+            'S/MIME signing': 'Yes',
+            'S/MIME signing CA': 'No',
+            'S/MIME encryption': 'Yes',
+            'S/MIME encryption CA': 'No',
+            'CRL signing': 'Yes',
+            'CRL signing CA': 'No',
+            'Any Purpose': 'Yes',
+            'Any Purpose CA': 'Yes',
+            'OCSP helper': 'Yes',
+            'OCSP helper CA': 'No',
+            'Time Stamp signing': 'No',
+            'Time Stamp signing CA': 'No'
+        }
+        assert results['ocsp_uri'] is None
+        assert results['signature_algorithm'] == 'sha256WithRSAEncryption'
+        assert results['public_key_algorithm'] == 'rsaEncryption'
+        assert results['length'] == 2048
+        assert type(results['names']) is list
+        assert len(results['names']) == 2
+        assert results['names'] == [
+            'mock.amplify-url.com',
+            'mock.cn.amplify-url.com'
+        ]
